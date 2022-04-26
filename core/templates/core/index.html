@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% load filtros %}
+
+{% block pagina %}
+Dashboard
+{% endblock pagina %}
+    
+
+{% block conteudo %}
+<h2>{{ user|verificar_grupo:'Professor' }}</h2>
+{% endblock conteudo %}
+    
