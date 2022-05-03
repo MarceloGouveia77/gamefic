@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% block pagina %}
+Turmas
+{% endblock pagina %}
+    
+
+{% block conteudo %}
+<div class="row mb-2">
+    <div class="col-12 text-end">
+        <a class="btn btn-sm btn-success" href="{% url 'core:cadastrar_turma' %}">+ Cadastrar</a>
+    </div>
+</div>
+<div class="row flex-nowrap justify-content-center mx-2">
+    {% for turma in turmas %}
+        <div class="card col-md-3 px-0 m-1 card-turma" turma-id="{{ turma.id }}">
+            <div class="card-header">
+                <h5>{{ turma.nome }}</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-inline-flex w-100 justify-content-between">
+                    {% if turma.ativa %}
+                        <p class="m-0"><span class="badge bg-success">Ativa</span></p>
+                    {% else %}
+                        <p class="m-0"><span class="badge bg-danger">Inativa</span></p>
+                    {% endif %}
+                    <p class="m-0"><span class="badge bg-primary">{{ turma.semestre }}</span></p>
+                    <p class="m-0"><span class="badge bg-secondary">{{ turma.obter_quantidade_alunos }} alunos</span></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock conteudo %}
+    
+
+{% block scripts %}
+<script>
+    const cards = document.querySelectorAll('.card-turma');
+    cards.forEach(card => {
+        card.addEventListener('click', function() {
+            window.location.href = `/turma/${this.getAttribute('turma-id')}`;
+        });
+    });
+</script>
+{% endblock scripts %}
+    

@@ -1,0 +1,61 @@
+{% extends 'core/base.html' %}
+
+{% block pagina %}
+{{ turma }}
+{% endblock pagina %}
+    
+
+{% block conteudo %}
+<div class="row">
+    <div class="card col-md-3 p-0">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="card-title">Informações</h5>
+                </div>
+                <div class="col-md-6 text-end">
+                    <button class="btn btn-sm btn-success" type="button">Gerar Link</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <p class="card-text">
+                        <strong>Nome:</strong> {{ turma.nome }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Semestre:</strong> {{ turma.semestre }}
+                    </p>
+                    <p class="card-text">
+                        <strong>Ativa:</strong> {{ turma.ativa }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-end">
+            <a href="" class="btn btn-sm btn-primary">Editar</a>
+            <a href="" class="btn btn-sm btn-danger">Excluir</a>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="alunos-tab" data-bs-toggle="tab" data-bs-target="#alunos" type="button" role="tab" aria-controls="alunos" aria-selected="true">Alunos</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="atividades-tab" data-bs-toggle="tab" data-bs-target="#atividades" type="button" role="tab" aria-controls="atividades" aria-selected="false">Atividades</button>
+            </li>
+          </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="alunos" role="tabpanel" aria-labelledby="alunos-tab">
+                alunos
+            </div>
+            <div class="tab-pane fade" id="atividades" role="tabpanel" aria-labelledby="atividades-tab">
+                atividades
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock conteudo %}
+    

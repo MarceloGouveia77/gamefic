@@ -158,3 +158,26 @@ body {
     left: 0;
     top: 0
 }
+
+a {
+    color: #2470dc;
+    text-decoration: none;
+}
+
+.login {
+    max-width: 100%;
+    background: #254167 !important;
+}
+
+.login-row {
+    height: 100vh;
+    align-content: center;
+}
+
+.login-card {
+    height: auto;
+}
+
+.card-turma {
+    cursor: pointer;
+}

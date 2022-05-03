@@ -7,6 +7,14 @@
                     Dashboard
                 </a>
             </li>
+            {% if user.is_superuser %}
+            <li class="nav-item">
+                <a class="nav-link {{ turmas_active }}" href="{% url 'core:turmas' %}">
+                    <i data-feather="users"></i>
+                    Turmas
+                </a>
+            </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link {{ alunos_active }}" href="{% url 'core:alunos' %}">
                     <i data-feather="users"></i>

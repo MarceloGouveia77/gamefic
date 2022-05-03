@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block pagina %}
+Alunos
+{% endblock pagina %}
+    
+
+{% block conteudo %}
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <div class="thead">
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Turmas</th>
+                <th>Pontuação Total</th>
+                <th>Email</th>
+                <th>Opções</th>
+            </div>
+            <div class="tbody">
+                {% for aluno in alunos %}
+                <tr>
+                    <td>{{ aluno.id }}</td>
+                    <td>{{ aluno.obter_nome_completo }}</td>
+                    <td>{{ aluno.obter_quantidade_turmas }}</td>
+                    <td>0</td>
+                    <td>{{ aluno.usuario.email }}</td>
+                    <td>
+                        <a href="" class="btn btn-sm btn-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </div>
+        </table>
+    </div>
+</div>
+{% endblock conteudo %}
+    

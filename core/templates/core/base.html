@@ -29,7 +29,7 @@
         </button>
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#">Sair</a>
+                <a class="nav-link px-3" href="{% url 'core:logout' %}">Sair</a>
             </div>
         </div>
     </header>
@@ -63,6 +63,10 @@
     <script>
         feather.replace()
       </script>
+    
+    {% block scripts %}
+    {% endblock scripts %}
+        
 
 
     <div id="terafm-shadow"></div>
