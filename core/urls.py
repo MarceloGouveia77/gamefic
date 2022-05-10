@@ -10,6 +10,7 @@ urlpatterns = [
     path('pontuacoes/', views.pontuacoes, name='pontuacoes'),
     path('sugestao/', views.sugestao, name='sugestao'),
     path('turmas/', views.turmas, name='turmas'),
+    path('atividades/nova/', views.cadastrar_atividade, name='cadastrar_atividade'),
     path('turma/<int:pk>/', views.detalhe_turma, name='detalhe_turma'),
     path('turmas/gerar_link/<int:pk>/', views.gerar_link_tuma, name='gerar_link_tuma'),
     path('turmas/entrar/<str:hash>/', views.entrar_turma, name='entrar_turma'),

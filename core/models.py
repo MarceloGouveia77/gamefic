@@ -38,6 +38,11 @@ class Turma(models.Model):
     def obter_quantidade_alunos(self):
         return AlunosTurma.objects.filter(turma=self).count()
     
+    def obter_alunos(self):
+        alunos_turma = AlunosTurma.objects.filter(turma=self)
+        alunos = [alunos_t.aluno for alunos_t in alunos_turma]
+        return alunos
+    
     def ingressar_aluno(self, aluno):
         try:
             AlunosTurma.objects.create(turma=self, aluno=aluno)
@@ -56,6 +61,7 @@ class Turma(models.Model):
 class AlunosTurma(models.Model):
     turma = models.ForeignKey(Turma, on_delete=models.CASCADE)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    pontuacao = models.FloatField('Pontuação', default=0)
     data_criacao = models.DateField("Criado Em", auto_now_add=True)
     
     def __str__(self):
@@ -76,3 +82,28 @@ class ProfessoresTurma(models.Model):
     def __str__(self):
         return f'{self.turma.nome} - {self.professor.nome}'
     
+class Atividade(models.Model):
+    turma = models.ForeignKey(Turma, on_delete=models.CASCADE)
+    descricao = models.CharField('Descricao', max_length=1024)
+    data_criacao = models.DateField("Criado Em", auto_now_add=True)
+    
+    def __str__(self):
+        return self.descricao
+    
+    def popular(self):
+        alunos_turma = AlunosTurma.objects.filter(turma=self.turma)
+        for aluno_turma in alunos_turma:
+            try:
+                AlunosAtividade.objects.get(aluno=aluno_turma.aluno, atividade=self)
+                continue
+            except:
+                AlunosAtividade.objects.create(atividade=self, aluno=aluno_turma.aluno)
+        return True
+    
+class AlunosAtividade(models.Model):
+    atividade = models.ForeignKey(Atividade, on_delete=models.CASCADE)
+    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
+    nota = models.FloatField('Nota', default=0)
+    
+    def __str__(self):
+        return self.atividade.descricao + ' - ' + self.aluno.obter_nome_completo()

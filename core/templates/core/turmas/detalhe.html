@@ -14,7 +14,7 @@
                     <h5 class="card-title">Informações</h5>
                 </div>
                 <div class="col-md-6 text-end">
-                    <button class="btn btn-sm btn-success" type="button">Gerar Link</button>
+                    <button turma-id="{{ turma.id }}" class="btn btn-sm btn-success {% if not user.is_superuser %} disabled {% endif %}" id="btn-gerar-link" type="button">Gerar Link</button>
                 </div>
             </div>
         </div>
@@ -34,8 +34,8 @@
             </div>
         </div>
         <div class="card-footer text-end">
-            <a href="" class="btn btn-sm btn-primary">Editar</a>
-            <a href="" class="btn btn-sm btn-danger">Excluir</a>
+            <a href="" class="btn btn-sm btn-primary {% if not user.is_superuser %} disabled {% endif %}">Editar</a>
+            <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
         </div>
     </div>
     <div class="col-md-9">
@@ -49,13 +49,153 @@
           </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="alunos" role="tabpanel" aria-labelledby="alunos-tab">
-                alunos
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table">
+                            <div class="thead">
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Pontuação Total</th>
+                                <th>Email</th>
+                                <th>Opções</th>
+                            </div>
+                            <div class="tbody">
+                                {% for aluno_turma in alunos_turma %}
+                                <tr>
+                                    <td>{{ aluno_turma.aluno.id }}</td>
+                                    <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
+                                    <td>{{ aluno_turma.pontuacao }}</td>
+                                    <td>{{ aluno_turma.aluno.usuario.email }}</td>
+                                    <td>
+                                        <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </div>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade" id="atividades" role="tabpanel" aria-labelledby="atividades-tab">
-                atividades
+                <div class="row">
+                    <div class="col-12 text-end">
+                        <button type="button" class="btn btn-sm btn-success mt-2" data-bs-toggle="modal" data-bs-target="#modal-atividade   ">
+                            + Atividade
+                        </button>
+                    </div>
+                    <div class="col-12">
+                        <table class="table table-sm table-bordered table-striped"> 
+                            <div class="thead">
+                                <th class="text-start font-weight-bold align-middle">Aluno</th>
+                                {% for atividade in atividades %}
+                                    <th>{{ atividade.descricao }}</th>
+                                {% endfor %}
+                                <th>Total</th>
+                            </div>
+                            <div class="tbody">
+                                {% for aluno_turma in alunos_turma %}
+                                <tr>
+                                    <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
+                                    {% for atividade in atividades %}
+                                        <td>0</td>
+                                    {% endfor %}
+                                    <td>0.0</td>
+                                </tr>
+                                {% endfor %}
+                            </div>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<div class="modal" tabindex="-1" id="modal-atividade">
+    <div class="modal-dialog">
+    <form method="post" id="form-atividade"> 
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Adicionar Atividade</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+                <div class="form-group"> 
+                    <input type="hidden" name="turma-id" id="turma-id" value="{{ turma.id }}">
+                    <label for="descricao">Descricao</label>
+                    <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição da Atividade">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </div>
+    </form>
+    </div>
+  </div>
 {% endblock conteudo %}
+    
+
+{% block scripts %}
+<script>
+    const formAtividade = document.getElementById('form-atividade').addEventListener("submit", function(e) {
+        e.preventDefault();
+        const endpoint = `/atividades/nova/`;
+        const data = {
+            'turma': document.getElementById('turma-id').value,
+            'descricao': document.getElementById('descricao').value
+        }
+
+        const myRequest = new Request(endpoint, {method: 'POST', body: JSON.stringify(data)}, {headers: {'Content-Type': 'application/json'}});
+        fetch(myRequest)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Ops! Houve um erro em nosso servidor.');
+            }
+        })
+        .then(response => {
+            window.location.reload();
+        }).catch(error => {
+            Swal.fire({
+            icon: 'error',
+            title: error,
+            text: 'https://localhost:8000/turma/{{ turma.id }}',
+            })
+        });
+    })
+
+    const el = document.getElementById("btn-gerar-link").addEventListener("click", function(e) { 
+        const turmaId = this.getAttribute("turma-id");
+        const endpoint = `/turmas/gerar_link/${turmaId}/`;
+
+        const myRequest = new Request(endpoint, {method: 'GET'});
+
+        fetch(myRequest)
+        .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                throw new Error('Ops! Houve um erro em nosso servidor.');
+            }
+        })
+        .then(response => {
+            Swal.fire({
+            icon: 'success',
+            title: 'Link gerado.',
+            text: response.link,
+            })
+        }).catch(error => {
+            Swal.fire({
+            icon: 'error',
+            title: error,
+            text: 'https://localhost:8000/turma/{{ turma.id }}',
+            })
+        });
+    });
+</script>
+{% endblock scripts %}
     

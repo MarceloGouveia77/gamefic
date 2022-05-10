@@ -1,16 +1,20 @@
 {% extends 'core/base.html' %}
 
 {% block pagina %}
-Turmas
+Minhas Turmas
 {% endblock pagina %}
     
 
 {% block conteudo %}
+
+{% if user.is_superuser %}
 <div class="row mb-2">
     <div class="col-12 text-end">
         <a class="btn btn-sm btn-success" href="{% url 'core:cadastrar_turma' %}">+ Cadastrar</a>
     </div>
 </div>
+{% endif %}
+    
 <div class="row flex-nowrap justify-content-center mx-2">
     {% for turma in turmas %}
         <div class="card col-md-3 px-0 m-1 card-turma" turma-id="{{ turma.id }}">
