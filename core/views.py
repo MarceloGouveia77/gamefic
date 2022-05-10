@@ -123,10 +123,10 @@ def turmas(request):
     for turma in todas_turmas:
         try:
             if request.user.is_superuser:
-                ProfessoresTurma.objects.get(turma=turma)
+                ProfessoresTurma.objects.get(turma=turma, professor__usuario=request.user)
                 turmas.append(turma)
             else:
-                AlunosTurma.objects.get(turma=turma)
+                AlunosTurma.objects.get(aluno__usuario=request.user, turma=turma)
                 turmas.append(turma)
             continue
         except Exception as e:
