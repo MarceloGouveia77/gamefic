@@ -1,7 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 body {
-    font-size: .875rem;
+  font-size: .875rem;
+}
+
+.center-container{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*Login & Cadastrar_aluno*/
+
+.container{
+  max-width: 850px;
+  background: #fff;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 40px 30px;
+}
+
+.container .forms-container .title{
+  position: relative;
+  font-size: 1.71rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.container .forms-container .title::before{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 25px;
+  background-color: #5995fd;
+}
+
+.image{
+  max-width: 360px;
+  width: 100%;
+  height: 100%;
+}
+
+.have-login{
+  margin-left: 2rem;
+}
+
+form{
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+.title{
+  font-size: 2.2rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.input-field{
+  max-width: 380px;
+  width: 100%;
+  height: 55px;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  border-radius: 55px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 .4rem;
+}
+
+.input-field i{
+  text-align: center;
+  line-height: 55px;
+  color: #acacac;
+  font-size: 1.1rem;
+}
+
+.input-field input{
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.input-field input::placeholder{
+  color: #aaa;
+  font-weight: 500;
+}
+
+.btn{
+  width: 150px;
+  height: 49px;
+  border: none;
+  outline: none;
+  border-radius: 49px;
+  cursor: pointer;
+  background-color: #5995fd;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  transition: .5s;
+}
+
+.btn:hover{
+  background-color: #4d84e2;
+  color: #fff;
+}
+
+.btn.transparent {
+  margin: 0;
+  background: none;
+  border: 2px solid #5995fd;
+  color: #333;
+  width: 150px;
+  height: 49px;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+.btn.transparent:hover{
+  color: #acacac;
+}
+
+.signup-buttons-group{
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 800px){
+  .image{
+    display: none;
   }
-  
+}
+
+
+/*Questionário*/
+.card{
+  margin-top: 2rem;
+  width: 100%;
+}
+
+.card-header{
+  background-color: #f0f0f0;
+}
+
+.card-buttons{
+  align-self: center;
+}
+
+.info-title{
+  font-size: 1rem;
+}
+
+.info-title strong{
+  color: #5995fd;
+}
+
+.notice{
+  color: #e46b6b;
+  font-size: 0.rem;
+}
+
   .feather {
     width: 16px;
     height: 16px;
