@@ -107,7 +107,7 @@ form{
   font-weight: 500;
 }
 
-.btn{
+.button{
   width: 150px;
   height: 49px;
   border: none;
@@ -122,12 +122,12 @@ form{
   transition: .5s;
 }
 
-.btn:hover{
+.button:hover{
   background-color: #4d84e2;
   color: #fff;
 }
 
-.btn.transparent {
+.button.transparent {
   margin: 0;
   background: none;
   border: 2px solid #5995fd;
@@ -138,7 +138,7 @@ form{
   font-size: 0.8rem;
 }
 
-.btn.transparent:hover{
+.button.transparent:hover{
   color: #acacac;
 }
 

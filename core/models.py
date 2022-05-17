@@ -3,8 +3,8 @@ from django.conf import settings
 from django.forms import ValidationError
 
 TIPOS_ALUNOS = [
-    ('P', 'Predador'),
-    ('R', 'Realizador'),
+    ('K', 'Predador'),
+    ('A', 'Realizador'),
     ('S', 'Socializador'),
     ('E', 'Explorador'),
 ]
@@ -25,6 +25,28 @@ class Aluno(models.Model):
     
     def obter_quantidade_turmas(self):
         return AlunosTurma.objects.filter(aluno=self).count()
+    
+    def calcular_media(self, turma):
+        try:
+            atividades = AlunosAtividade.objects.filter(aluno=self, atividade__turma=turma)
+            pts = 0
+            qtd = atividades.count()
+            for atividade in atividades:
+                pts += atividade.nota
+            return float(pts/qtd)
+        except:
+            return 0
+        
+    def calcular_pontuacao_total(self, turma):
+        try:
+            atividades = AlunosAtividade.objects.filter(aluno=self, atividade__turma=turma)
+            total = 0
+            for atividade in atividades:
+                total += atividade.nota
+            return float(total)
+        except:
+            return 0
+        
 class Turma(models.Model):
     nome = models.CharField('Nome', max_length=1024)
     criado_em = models.DateField("Criado Em", auto_now_add=True)
@@ -46,6 +68,9 @@ class Turma(models.Model):
     def ingressar_aluno(self, aluno):
         try:
             AlunosTurma.objects.create(turma=self, aluno=aluno)
+            atividades = Atividade.objects.filter(turma=self)
+            for at in atividades:
+                at.popular()
             return True
         except:
             return False

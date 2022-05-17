@@ -5,7 +5,7 @@ from core.constants import QUESTOES
 from core.forms import AlunoForm, TurmaForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from core.models import Aluno, AlunosTurma, Atividade, Professor, ProfessoresTurma, Turma
+from core.models import Aluno, AlunosAtividade, AlunosTurma, Atividade, Professor, ProfessoresTurma, Turma
 from django.contrib.auth import get_user_model
 from django.views.decorators.csrf import csrf_exempt
 from collections import Counter
@@ -48,12 +48,11 @@ def login_sistema(request):
     return render(request, 'core/login.html', {})
 
 def cadastrar_aluno(request):
-    form = AlunoForm(request.POST or None)
-    data = {
-        'form': form
-    }
-    
+    data = {}
     if request.method == "POST":
+        professor = False
+        if request.POST.get('professor'):
+            professor = True
         User = get_user_model()
         
         email = request.POST.get("email")
@@ -72,18 +71,35 @@ def cadastrar_aluno(request):
             return render(request, 'core/cadastrar_aluno.html', data)
         
         usuario = User.objects.create_user(uuid.uuid4(), email, senha)
+        usuario.first_name = request.POST.get("nome")
+        usuario.last_name = request.POST.get("sobrenome")
+        if professor:
+            usuario.is_superuser = True
+        usuario.save()
         
-        if form.is_valid():
-            aluno = form.save(commit=False)
-            aluno.usuario = usuario
-            aluno.save()
+        try:
+            if professor:
+                Professor.objects.create(
+                    nome=request.POST.get("nome"),
+                    sobrenome=request.POST.get("sobrenome"),
+                    usuario=usuario
+                )
+            else:
+                Aluno.objects.create(
+                    nome=request.POST.get("nome"),
+                    sobrenome=request.POST.get("sobrenome"),
+                    usuario=usuario
+                )
             data['cadastrado'] = True
+        except:
+            data['erro'] = "Ocorreu um erro ao cadastrar o aluno"
     return render(request, 'core/cadastrar_aluno.html', data)
 
 def logout_site(request):
     logout(request)
     return redirect('core:login')
 
+@login_required(login_url='/login')
 def index(request):
     try:
         aluno = Aluno.objects.get(usuario=request.user)
@@ -92,30 +108,34 @@ def index(request):
     except:
         pass
     data = {
-        'dashboard_active': 'active',
+        'pagina': 'Dashboard',
         'nome': 'Gabriel Coutinho'
     }
     return render(request, 'core/index.html', data)
 
+@login_required(login_url='/login')
 def alunos(request):
     data = {
-        'alunos_active': 'active',
+        'pagina': 'Alunos',
         'alunos': Aluno.objects.all().order_by('nome')
     }
     return render(request, 'core/alunos/index.html', data)
 
+@login_required(login_url='/login')
 def pontuacoes(request):
     data = {
         'pontuacoes_active': 'active'
     }
     return render(request, 'core/pontuacoes.html', data)
 
+@login_required(login_url='/login')
 def sugestao(request):
     data = {
-        'sugestao_active': 'active'
+        'pagina': 'Sugestão de Gamificação'
     }
     return render(request, 'core/sugestao.html', data)
 
+@login_required(login_url='/login')
 def turmas(request):
     todas_turmas = Turma.objects.all().order_by('nome')
     turmas = []
@@ -134,23 +154,26 @@ def turmas(request):
             continue
     
     data = {
-        'turmas_active': 'active',
+        'pagina': 'Minhas Turmas',
         'turmas': turmas
     }
     return render(request, 'core/turmas/index.html', data)
 
+@login_required(login_url='/login')
 def cadastrar_turma(request):
     form = TurmaForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        turma = form.save()
+        turma.ingressar_professor(Professor.objects.get(usuario=request.user))
         return redirect('core:turmas')
     return render(request, 'core/turmas/cadastrar.html', {'form': form, 'turmas_active': 'active',})
 
+@login_required(login_url='/login')
 def detalhe_turma(request, pk):
     turma = Turma.objects.get(id=pk)
     
     data = {
-        'turmas_active': 'active',
+        'pagina': 'Minhas Turmas',
         'turma': turma,
         'alunos_turma': AlunosTurma.objects.filter(turma=turma),
         'professores': ProfessoresTurma.objects.filter(turma=turma),
@@ -220,7 +243,8 @@ def entrar_turma(request, hash):
             return render(request, 'core/turmas/entrar.html', data)
     else:
         return JsonResponse({'msg': 'Método não autorizado'}, status=405)
-    
+
+@login_required(login_url='/login')
 def questionario(request):
     aluno = Aluno.objects.get(usuario=request.user)
     data = {
@@ -231,6 +255,21 @@ def questionario(request):
     if request.method == "POST":
         items = request.POST.getlist("respostas")[0].split(",")
         ocorrencias = Counter(items)
+        
+        lista = []
+        lista.append({'rank': 'A', 'ocorrencias': int(ocorrencias['A'])})
+        lista.append({'rank': 'K', 'ocorrencias': int(ocorrencias['K'])})
+        lista.append({'rank': 'E', 'ocorrencias': int(ocorrencias['E'])})
+        lista.append({'rank': 'S', 'ocorrencias': int(ocorrencias['S'])})
+        
+        maior = 0
+        rank = ''
+        for item in lista:
+            if item['ocorrencias'] > maior:
+                maior = item['ocorrencias']
+                rank = item['rank']
+                
+        aluno.tipo = rank
         aluno.confirmado = True
         aluno.save()
         return HttpResponse(f"Resultado de seu perfil: {aluno.tipo}")
@@ -249,3 +288,27 @@ def cadastrar_atividade(request):
     
     atividade.popular()
     return JsonResponse({"msg": "Atividade Cadastrada com sucesso"}, status=200)
+
+@csrf_exempt
+def alterar_nota(request):
+    if request.method == "POST":
+        conteudo = json.loads(request.body)
+        atividade_id = int(conteudo['atividade_id'])
+        nota = float(conteudo['nota'])
+        
+        try:
+            aluno_atividade = AlunosAtividade.objects.get(id=atividade_id)
+            aluno_atividade.nota = nota
+            aluno_atividade.save()
+            media = aluno_atividade.aluno.calcular_media(aluno_atividade.atividade.turma)
+            pontuacao = aluno_atividade.aluno.calcular_pontuacao_total(aluno_atividade.atividade.turma)
+            return JsonResponse({
+                "msg": "Nota alterada com sucesso", 
+                'status': "ok", 
+                "media": media,
+                "pontuacao": pontuacao,
+                "aluno_id": aluno_atividade.aluno.id
+                }, status=200)
+        except:
+            return JsonResponse({"msg": "Erro ao alterar nota"}, status=400)
+            

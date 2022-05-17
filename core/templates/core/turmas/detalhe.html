@@ -1,109 +1,141 @@
 {% extends 'core/base.html' %}
-
+{% load filtros %}
 {% block pagina %}
 {{ turma }}
 {% endblock pagina %}
     
 
+{% block botoes %}
+<button turma-id="{{ turma.id }}" class="btn btn-sm btn-success {% if not user.is_superuser %} disabled {% endif %}" id="btn-gerar-link" type="button">Gerar Link</button>
+{% endblock botoes %}
+    
+
 {% block conteudo %}
 <div class="row">
-    <div class="card col-md-3 p-0">
-        <div class="card-header">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5 class="card-title">Informações</h5>
-                </div>
-                <div class="col-md-6 text-end">
-                    <button turma-id="{{ turma.id }}" class="btn btn-sm btn-success {% if not user.is_superuser %} disabled {% endif %}" id="btn-gerar-link" type="button">Gerar Link</button>
+    <div class="col-12">
+        <div class="card p-0 mt-0">
+            <div class="card-header py-0">
+                <h5 class="card-title">Informações</h5>
+            </div>
+            <div class="card-body pt-2">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="card-text">
+                            <strong>Nome:</strong> {{ turma.nome }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Semestre:</strong> {{ turma.semestre }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Ativa:</strong> {{ turma.ativa }}
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <p class="card-text">
-                        <strong>Nome:</strong> {{ turma.nome }}
-                    </p>
-                    <p class="card-text">
-                        <strong>Semestre:</strong> {{ turma.semestre }}
-                    </p>
-                    <p class="card-text">
-                        <strong>Ativa:</strong> {{ turma.ativa }}
-                    </p>
-                </div>
+            <div class="card-footer text-end">
+                <a href="" class="btn btn-sm btn-primary {% if not user.is_superuser %} disabled {% endif %}">Editar</a>
+                <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
             </div>
-        </div>
-        <div class="card-footer text-end">
-            <a href="" class="btn btn-sm btn-primary {% if not user.is_superuser %} disabled {% endif %}">Editar</a>
-            <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
         </div>
     </div>
-    <div class="col-md-9">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="alunos-tab" data-bs-toggle="tab" data-bs-target="#alunos" type="button" role="tab" aria-controls="alunos" aria-selected="true">Alunos</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="atividades-tab" data-bs-toggle="tab" data-bs-target="#atividades" type="button" role="tab" aria-controls="atividades" aria-selected="false">Atividades</button>
-            </li>
-          </ul>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="alunos" role="tabpanel" aria-labelledby="alunos-tab">
-                <div class="row">
-                    <div class="col-12">
-                        <table class="table">
-                            <div class="thead">
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Pontuação Total</th>
-                                <th>Email</th>
-                                <th>Opções</th>
+    <div class="col-12">
+        <div class="card mt-0">
+            <div class="card-body pt-3">
+                <ul class="nav nav-tabs pb-3" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="alunos-tab" data-bs-toggle="tab" data-bs-target="#alunos" type="button" role="tab" aria-controls="alunos" aria-selected="true">Alunos</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="atividades-tab" data-bs-toggle="tab" data-bs-target="#atividades" type="button" role="tab" aria-controls="atividades" aria-selected="false">Atividades</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="alunos" role="tabpanel" aria-labelledby="alunos-tab">
+                        
+                        {% if alunos_turma %}
+                        <div class="row">
+                            <div class="col-12">
+                                <table class="table">
+                                    <div class="thead">
+                                        <th>Nome</th>
+                                        <th>Pontuação Total</th>
+                                        <th>Email</th>
+                                        <th>Opções</th>
+                                    </div>
+                                    <div class="tbody">
+                                        {% for aluno_turma in alunos_turma %}
+                                        <tr>
+                                            <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
+                                            <td>{{ aluno_turma.aluno|calcular_pontuacao_total:aluno_turma.turma }}</td>
+                                            <td>{{ aluno_turma.aluno.usuario.email }}</td>
+                                            <td>
+                                                <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </div>
+                                </table>
                             </div>
-                            <div class="tbody">
-                                {% for aluno_turma in alunos_turma %}
-                                <tr>
-                                    <td>{{ aluno_turma.aluno.id }}</td>
-                                    <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
-                                    <td>{{ aluno_turma.pontuacao }}</td>
-                                    <td>{{ aluno_turma.aluno.usuario.email }}</td>
-                                    <td>
-                                        <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col-12 text-center pt-3">
+                                <p>Não há alunos nesta turma.</p>
                             </div>
-                        </table>
+                        </div>
+                        {% endif %}
+                            
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="atividades" role="tabpanel" aria-labelledby="atividades-tab">
-                <div class="row">
-                    <div class="col-12 text-end">
-                        <button type="button" class="btn btn-sm btn-success mt-2" data-bs-toggle="modal" data-bs-target="#modal-atividade   ">
-                            + Atividade
-                        </button>
-                    </div>
-                    <div class="col-12">
-                        <table class="table table-sm table-bordered table-striped"> 
-                            <div class="thead">
-                                <th class="text-start font-weight-bold align-middle">Aluno</th>
-                                {% for atividade in atividades %}
-                                    <th>{{ atividade.descricao }}</th>
-                                {% endfor %}
-                                <th>Total</th>
+                    <div class="tab-pane fade" id="atividades" role="tabpanel" aria-labelledby="atividades-tab">
+                        <div class="row">
+                            <div class="col-12 text-end pb-3">
+                                {% if user.is_superuser %}
+                                <button type="button" class="btn btn-sm btn-success mt-2" data-bs-toggle="modal" data-bs-target="#modal-atividade   ">
+                                    + Atividade
+                                </button>
+                                {% endif %}
                             </div>
-                            <div class="tbody">
-                                {% for aluno_turma in alunos_turma %}
-                                <tr>
-                                    <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
-                                    {% for atividade in atividades %}
-                                        <td>0</td>
-                                    {% endfor %}
-                                    <td>0.0</td>
-                                </tr>
-                                {% endfor %}
+                            <div class="col-12">
+                                <table class="table table-sm table-bordered table-striped"> 
+                                    <div class="thead">
+                                        <th class="text-start font-weight-bold align-middle py-2">Aluno</th>
+                                        {% for atividade in atividades %}
+                                            <th class="py-2 text-center">{{ atividade.descricao }}</th>
+                                        {% endfor %}
+                                        <th>Total</th>
+                                    </div>
+                                    <div class="tbody">
+                                        {% for aluno_turma in alunos_turma %}
+                                        <tr>
+                                            <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
+                                            {% for atividade in atividades %}
+                                                
+                                                {% with at=atividade|obter_aluno_atividade:aluno_turma.aluno %}
+                                                    <td style="cursor: pointer"
+                                                    {% if user.is_superuser %}
+                                                        class="text-center btn-alterar-nota btn-alterar-nota-{{ at.id }}"" 
+                                                        atividade-id="{{ at.id }}"
+                                                        aluno-id="{{ aluno_turma.aluno.id }}"
+                                                        aluno-nota="{{ at.nota }}"
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modal-alterar-nota"
+                                                    {% else %}
+                                                        class="text-center" 
+                                                    {% endif %}
+                                                    >
+                                                    <span id="atividade-{{ at.id }}">{{ at.nota }}</span>
+                                                    </td>
+                                                    
+                                                {% endwith %}
+                                                    
+                                            {% endfor %}
+                                            <td><span id="pontuacao-{{ aluno_turma.aluno.id }}">{{ aluno_turma.aluno|calcular_pontuacao_total:aluno_turma.turma }}</span></td>
+                                        </tr>
+                                        {% endfor %}
+                                    </div>
+                                </table>
                             </div>
-                        </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,33 +146,124 @@
 
 <div class="modal" tabindex="-1" id="modal-atividade">
     <div class="modal-dialog">
-    <form method="post" id="form-atividade"> 
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Adicionar Atividade</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-                <div class="form-group"> 
-                    <input type="hidden" name="turma-id" id="turma-id" value="{{ turma.id }}">
-                    <label for="descricao">Descricao</label>
-                    <input type="text" class="form-control" id="descricao" name="descricao" placeholder="Descrição da Atividade">
+        <form method="post" id="form-atividade">{% csrf_token %}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Atividade</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" name="turma-id" id="turma-id" value="{{ turma.id }}">
+                        <label for="descricao">Descricao</label>
+                        <input type="text" class="form-control" id="descricao" name="descricao"
+                            placeholder="Descrição da Atividade">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="modal-alterar-nota">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alterar Nota</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="hidden" id="alt-nota-aluno-atividade">
+                    <label for="nota">Nota</label>
+                    <input type="number" class="form-control" id="alt-nota-aluno-nota">
                 </div>
             </div>
             <div class="modal-footer">
+                <div class="row erro-nota d-none">
+                    <div class="col-12 text-center">
+                        <span class="alert alert-danger p-2">A nota deve ser maior que 0</span>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary">Salvar</button>
+                <button type="button" class="btn btn-primary btn-submit-alterar-nota">Salvar</button>
             </div>
         </div>
-    </form>
     </div>
-  </div>
+</div>
 {% endblock conteudo %}
     
 
 {% block scripts %}
 <script>
-    const formAtividade = document.getElementById('form-atividade').addEventListener("submit", function(e) {
+    try {
+        const aba_ativa = window.localStorage.getItem('aba_turmas');
+        if (aba_ativa == 'atividades'){
+            document.getElementById('atividades-tab').click();
+        }
+    } catch (e) {
+        console.log(e);
+    }
+
+    document.getElementById('alunos-tab').addEventListener("click", function(){
+        window.localStorage.setItem('aba_turmas', 'alunos');
+    })
+
+    document.getElementById('atividades-tab').addEventListener("click", function(){
+        window.localStorage.setItem('aba_turmas', 'atividades');
+    })
+
+    try {
+        const btnsAlterarNota = document.querySelectorAll(".btn-alterar-nota");
+        btnsAlterarNota.forEach(btn => {
+            btn.addEventListener("click", function(e){
+            document.querySelector(".erro-nota").classList.add("d-none");
+            const atividade_id = this.getAttribute("atividade-id");
+            const nota = this.getAttribute("aluno-nota");
+            
+            document.querySelector("#alt-nota-aluno-atividade").value = atividade_id;
+            document.querySelector("#alt-nota-aluno-nota").value = nota;
+            document.querySelector("#alt-nota-aluno-nota").focus();
+            });
+        });
+    } catch (error) {
+        console.log(error);
+    }
+
+    document.querySelector(".btn-submit-alterar-nota").addEventListener("click", function(e){
+        const nota = document.querySelector("#alt-nota-aluno-nota").value;
+        const atividade_id = document.querySelector("#alt-nota-aluno-atividade").value;
+        
+        if (parseFloat(nota) < 0){
+            document.querySelector(".erro-nota").classList.remove("d-none");
+            return;
+        }
+
+        const url = '/alunos/alterar_nota/';
+        
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify({nota, atividade_id})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status == "ok"){
+                document.querySelector(`#atividade-${atividade_id}`).textContent = nota;
+                document.querySelector(`.btn-alterar-nota-${atividade_id}`).setAttribute("aluno-nota", nota);
+                document.querySelector("#modal-alterar-nota").click();
+                const aluno_id = data.aluno_id;
+                const pontuacao = data.pontuacao;
+                document.querySelector(`#pontuacao-${aluno_id}`).textContent = pontuacao;
+            }
+        })
+        .catch(error => console.log(error));
+    });
+
+    document.getElementById('form-atividade').addEventListener("submit", function(e) {
         e.preventDefault();
         const endpoint = `/atividades/nova/`;
         const data = {

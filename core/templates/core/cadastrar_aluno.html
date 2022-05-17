@@ -27,7 +27,14 @@
                 <div class="forms-container">
                     <form class="sign-up-form" method="post">{% csrf_token %}
                         <h2 class="title">Cadastre-se</h2>
-                        {{ form|crispy }}
+                        <div class="input-field">
+                            <i class="fas fa-person"></i>
+                            <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-person"></i>
+                            <input type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" required>
+                        </div>
                         <div class="input-field">
                             <i class="fas fa-envelope"></i>
                             <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" required>
@@ -40,13 +47,19 @@
                             <i class="fa fa-lock"></i>
                             <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirmar Senha" required>
                         </div>
+                        <div class="form-check py-2 ms-2">
+                            <input class="form-check-input" type="checkbox" name="professor" value="ok" id="professor">
+                            <label class="form-check-label" for="professor">
+                              Você é professor?
+                            </label>
+                        </div>
                         {% if erro %}
                             <div class="alert-danger">
                                 {{ erro }}
                             </div>
                         {% endif %}
                         <div class="signup-buttons-group">
-                            <input type="submit" value="Cadastrar" class="btn solid">
+                            <input type="submit" value="Cadastrar" class="button solid">
                             <div class="have-login">
                                 <a href="{% url 'core:login' %}">Já tenho uma conta</a>
                             </div>
