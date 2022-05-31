@@ -80,7 +80,7 @@
                         {% else %}
                         <div class="row">
                             <div class="col-12 text-center pt-3">
-                                <p>Não há alunos nesta turma.</p>
+                                <p>Não há alunos nesta turma. Gere o link para convidar. <button turma-id="{{ turma.id }}" class="btn btn-sm btn-success {% if not user.is_superuser %} disabled {% endif %}" id="btn-gerar-link" type="button">Gerar Link</button></p>
                             </div>
                         </div>
                         {% endif %}
@@ -95,8 +95,8 @@
                                 </button>
                                 {% endif %}
                             </div>
-                            <div class="col-12">
-                                <table class="table table-sm table-bordered table-striped"> 
+                            <div class="col-12 overflow-auto d-block">
+                                <table class="table table-bordered table-striped text-nowrap"> 
                                     <div class="thead">
                                         <th class="text-start font-weight-bold align-middle py-2">Aluno</th>
                                         {% for atividade in atividades %}

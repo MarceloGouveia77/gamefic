@@ -360,3 +360,7 @@ a {
 .card-turma {
     cursor: pointer;
 }
+
+.entrar{
+  max-width: 450px !important;
+}

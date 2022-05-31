@@ -280,7 +280,7 @@
   }
   .accordion-button:not(.collapsed) {
     color: #ffffff;
-    background-color: #ff4444;
+    background-color: #5995fd;
   }
   
   .accordion-flush .accordion-button {
@@ -364,7 +364,7 @@
   .logo span {
     font-size: 26px;
     font-weight: 700;
-    color: #ff4444;
+    color: #5995fd;
     font-family: "Nunito", sans-serif;
   }
   
@@ -382,7 +382,7 @@
     font-size: 32px;
     padding-left: 10px;
     cursor: pointer;
-    color: #ff4444;
+    color: #5995fd;
   }
   .header .search-bar {
     min-width: 360px;
@@ -611,7 +611,7 @@
   
   .sidebar-nav .nav-item a:hover {
     color: #ffffff !important;
-    background-color: #ff4444;
+    background-color: #5995fd;
     border-radius: 4px;
   }
   .sidebar-nav .nav-heading {
@@ -628,7 +628,7 @@
     font-weight: 600;
     color: #ffffff;
     transition: 0.3;
-    background: #ff4444;
+    background: #5995fd;
     padding: 10px 15px;
     border-radius: 4px;
   }
@@ -646,7 +646,7 @@
   }
   .sidebar-nav .nav-link:hover {
     color: #ffffff;
-    background: #ff4444;
+    background: #5995fd;
   }
   .sidebar-nav .nav-link:hover i {
     color: #ffffff;
@@ -1112,8 +1112,8 @@
   }
   
   .btn-danger {
-      background-color: #ff4444 !important;
-      border-color: #ff4444 !important;
+      background-color: #5995fd !important;
+      border-color: #5995fd !important;
   }
   
   .btn-primary {
@@ -1129,7 +1129,7 @@
   .nav-tabs .nav-link.active, .nav-tabs .show>.nav-link {
       font-size: 14px;
       color: #fff;
-      background-color: #ff4444;
+      background-color: #5995fd;
       font-weight: bold;
   }
   
@@ -1162,12 +1162,12 @@
   }
   
   .page-item.active .page-link {
-      background-color: #ff4444;
-      border-color: #ff4444;
+      background-color: #5995fd;
+      border-color: #5995fd;
   }
   
   a:hover {
-      color: #ff4444 !important;
+      color: #5995fd !important;
   }
   
   .form-floating {
@@ -1218,11 +1218,11 @@
   }
   
   .btn-link {
-      color: rgb(200, 30, 30);
+      color: #4d84e2;
   }
   
   .errorlist {
-      color: #ff4444;
+      color: #5995fd;
       font-size: 12px;
   }
   
@@ -1232,6 +1232,6 @@
   }
   
   .daterangepicker td.active {
-      background-color: #ff4444 !important;
+      background-color: #5995fd !important;
   }
   

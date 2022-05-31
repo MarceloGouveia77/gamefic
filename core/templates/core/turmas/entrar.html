@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,30 +12,27 @@
 
     <title>Entrar - {{ turma.nome }}</title>
 </head>
-<body class="login">
-    <div class="row container-fluid login-row">
-        <div class="col-md-5"></div>
-        <div class="card col-md-2 login-card p-0">
-            <div class="card-header">
-                <h5 class="card-title">Juntar-se a turma</h5>
-            </div>
-            <div class="card-body">
+<body>
+    <div class="center-container">
+        <div class="container entrar">
+            <div class="forms-container">
+                <h2 class="title">Juntar-se a turma</h2>
                 <form method="post">{% csrf_token %}
                     {% if erro %}
                         <div class="alert alert-danger mt-2" role="alert">
                             {{ erro }}
                         </div>
                     {% else %}
-                    <p>Deseja entrar na turma <span class="text-primary">{{ turma.nome }}</span> ? </p>
-                    <div class="form-group mt-2 text-center">
-                        <button type="submit" class="btn btn-primary">Entrar</button>
-                    </div>
+                        <p>Deseja entrar na turma <span class="text-primary">{{ turma.nome }}</span> ? </p>
+                        <div class="form-group mt-2 text-center align-self-center   ">
+                            <button type="submit" class="button solid">Entrar</button>
+                        </div>
                     {% endif %}
                 </form>
             </div>
         </div>
-        <div class="col-md-5"></div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
