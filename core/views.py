@@ -217,7 +217,24 @@ def cadastrar_turma(request):
         turma = form.save()
         turma.ingressar_professor(Professor.objects.get(usuario=request.user))
         return redirect('core:turmas')
-    return render(request, 'core/turmas/cadastrar.html', {'form': form, 'turmas_active': 'active',})
+    return render(request, 'core/turmas/cadastrar.html', {'form': form, 'btn': 'Cadastrar', 'tela': 'Cadastrar', 'turmas_active': 'active',})
+
+@login_required(login_url='/login')
+def editar_turma(request, id):
+    turma = Turma.objects.get(id=id)
+    form = TurmaForm(request.POST or None, instance=turma)
+    if form.is_valid():
+        turma = form.save()
+        return redirect('core:detalhe_turma', pk=turma.id)
+    return render(request, 'core/turmas/cadastrar.html', {'form': form, 'btn': 'Salvar', 'tela': 'Editar', 'turmas_active': 'active',})
+
+def excluir_turma(request, id):
+    try:
+        turma = Turma.objects.get(id=id)
+        turma.delete()
+        return JsonResponse({'sucesso': True, 'msg': 'Turma excluída com sucesso'})
+    except:
+        return JsonResponse({'sucesso': False, 'msg': 'Erro ao excluir turma'})
 
 @login_required(login_url='/login')
 def detalhe_turma(request, pk):

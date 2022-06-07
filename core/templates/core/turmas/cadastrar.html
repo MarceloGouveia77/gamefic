@@ -2,23 +2,30 @@
 {% load crispy_forms_tags %}
 
 {% block pagina %}
-Cadastrar Turma
+{{ tela }} Turma
 {% endblock pagina %}
     
 
 {% block conteudo %}
+
 <form class="row" method="post">{% csrf_token %}
-    <div class="col-md-3">
-        {{ form.nome|as_crispy_field }}
-    </div>
-    <div class="col-md-3">
-        {{ form.semestre|as_crispy_field }}
-    </div>
-    <div class="col-md-3 mt-3">
-        {{ form.ativa|as_crispy_field }}
-    </div>
-    <div class="col-12 text-center mt-2">
-        <button type="submit" class="btn btn-sm btn-success">Cadastrar</button>
+    <div class="col-12">
+        <div class="card m-0">
+            <div class="card-body pt-3">
+                <div class="col-md-3">
+                    {{ form.nome|as_crispy_field }}
+                </div>
+                <div class="col-md-3">
+                    {{ form.semestre|as_crispy_field }}
+                </div>
+                <div class="col-md-3 mt-3">
+                    {{ form.ativa|as_crispy_field }}
+                </div>
+                <div class="col-12 text-start mt-2">
+                    <button type="submit" class="btn btn-sm btn-success">{{ btn }}</button>
+                </div>
+            </div>
+        </div>
     </div>
 </form>
 {% endblock conteudo %}

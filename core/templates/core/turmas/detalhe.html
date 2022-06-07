@@ -36,8 +36,8 @@
             </div>
             {% if user.is_superuser %}
             <div class="card-footer text-end">
-                <a href="" class="btn btn-sm btn-primary">Editar</a>
-                <a href="" class="btn btn-sm btn-danger">Excluir</a>
+                <a href="{% url 'core:editar_turma' id=turma.id %}" class="btn btn-sm btn-primary">Editar</a>
+                <a href="#" turma-id="{{ turma.id }}" id="btn-excluir-turma" class="btn btn-sm btn-danger">Excluir</a>
             </div>
             {% endif %}
         </div>
@@ -214,6 +214,29 @@
 
 {% block scripts %}
 <script>
+    const btnExcluir = document.getElementById('btn-excluir-turma').addEventListener('click', function(){
+        const turma_id = document.getElementById('turma-id').value;
+        const url = `/turma/excluir/${turma_id}`;
+
+        alerta_deletar("Confirmar exclusão da turma?").then(result => {
+            if (result.isConfirmed) {
+                fetch(url, {
+                    method: "GET",
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.sucesso){
+                        window.location.href = "/turmas"
+                    }
+                })
+                .catch(error => console.log(error));
+            } else {
+                return ;
+            }
+        })
+
+    })
+
     try {
         const aba_ativa = window.localStorage.getItem('aba_turmas');
         if (aba_ativa == 'atividades'){
