@@ -13,11 +13,21 @@
             <span>Turmas</span>
             </a>
         </li>
+        
+        {% if user.is_superuser %}
         <li class="nav-item">
             <a class="nav-link {% if not pagina == 'Sugestão de Gamificação' %} collapsed {% endif %}" href="{% url 'core:sugestao' %}">
             <i class="bi bi-cloud-lightning"></i>
             <span>Sugestão de Gameficação</span>
             </a>
         </li>
+        {% endif %}
+        <li class="nav-item">
+            <a class="nav-link {% if not pagina == 'Sugestão de Gamificação' %} collapsed {% endif %}" href="{% url 'core:sugestao' %}">
+            <i class="bi bi-question-circle"></i>
+            <span>Ajuda</span>
+            </a>
+        </li>
+            
     </ul>
 </aside>
