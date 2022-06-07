@@ -234,7 +234,7 @@
             const nota = this.getAttribute("aluno-nota");
             
             document.querySelector("#alt-nota-aluno-atividade").value = atividade_id;
-            document.querySelector("#alt-nota-aluno-nota").value = nota;
+            document.querySelector("#alt-nota-aluno-nota").value = parseFloat(nota);
             document.querySelector("#alt-nota-aluno-nota").focus();
             });
         });
