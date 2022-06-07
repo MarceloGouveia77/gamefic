@@ -6,6 +6,74 @@ Sugestão de Gamificação
     
 
 {% block conteudo %}
-<h2>PAGINA DE SUGESTÃO</h2>
+<div class="row">
+    {% for turma in turmas %}
+    <div class="col-md-4">
+        <div class="card p-0 m-0">
+            <div class="card-header">
+                {{ turma.nome }}
+            </div>
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#modal-sugestao-gameficacao" 
+                        class="col-md-12 m-0 p-0" 
+                        id="grafico-{{ turma.id }}" 
+                        style="vertical-align: middle; cursor: pointer;"
+                    >
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    
+<div class="modal fade" id="modal-sugestao-gameficacao" tabindex="-1" data-bs-backdrop="false"  aria-hidden="true" style="display: none;">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Sugestão de Gameficação</h5>
+			</div>
+			<div class="modal-body">
+				<p>Aqui ficara a sugestão de Gameficação</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>
 {% endblock conteudo %}
+
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.0/dist/apexcharts.min.js"></script>
+
+<script>
+    fetch('/sugestao/graficos/', {
+        method: "GET",
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        data.map(grafico => {
+            var options = {
+                  series: grafico.dados.map(dado => dado.porcentagem),
+                  chart: {
+                  width: "100%",
+                  type: 'pie',
+                },
+                labels: grafico.dados.map(dado => dado.categoria),
+        
+                };
+        
+                var chart = new ApexCharts(document.querySelector(`#${grafico.grafico_id}`), options);
+                chart.render();
+        })
+    });
+</script>
+{% endblock scripts %}
+    
     

@@ -13,7 +13,7 @@ class Aluno(models.Model):
     nome = models.CharField("Nome", max_length=1024, null=False)
     sobrenome = models.CharField("Sobrenome", max_length=1024, null=False)
     pontuacao = models.FloatField("Pontuação", default=0, blank=True, null=True)
-    tipo = models.CharField("Tipo", choices=TIPOS_ALUNOS, max_length=1024, default='P', blank=True, null=True)
+    tipo = models.CharField("Tipo", choices=TIPOS_ALUNOS, max_length=1024, default='K', blank=True, null=True)
     confirmado = models.BooleanField('Confirmado', default=False)
     criado_em = models.DateField("Criado Em", auto_now_add=True)
 

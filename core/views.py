@@ -13,6 +13,13 @@ import uuid
 
 # Create your views here.
 
+rankings = {
+    'K': 'Predador',
+    'A': 'Realizador',
+    'S': 'Socializador',
+    'E': 'Explorador',
+}
+
 def login_sistema(request):
     if request.user.is_authenticated:
         return redirect('core:index')
@@ -130,10 +137,54 @@ def pontuacoes(request):
 
 @login_required(login_url='/login')
 def sugestao(request):
+    todas_turmas = Turma.objects.all().order_by('nome')
+    turmas = []
+    
+    for turma in todas_turmas:
+        try:
+            ProfessoresTurma.objects.get(turma=turma, professor__usuario=request.user)
+            turmas.append(turma)
+        except:
+            continue
+        
     data = {
+        'turmas': turmas,
         'pagina': 'Sugestão de Gamificação'
     }
     return render(request, 'core/sugestao.html', data)
+
+@csrf_exempt
+def graficos_sugestao(request):
+    todas_turmas = Turma.objects.all().order_by('nome')
+    turmas = []
+    
+    for turma in todas_turmas:
+        categorias = []
+        dados = []
+        try:
+            ProfessoresTurma.objects.get(turma=turma, professor__usuario=request.user)
+            alunos_turma = AlunosTurma.objects.filter(turma=turma)
+            for at in alunos_turma:
+                categorias.append(at.aluno.tipo)
+            
+            total_alunos = alunos_turma.count()
+            for categoria in set(categorias):
+                qtd_alunos = alunos_turma.filter(aluno__tipo=categoria).count()
+                porcentagem = (qtd_alunos / total_alunos) * 100
+                dados.append({
+                    'categoria': rankings[categoria],
+                    'porcentagem': round(porcentagem, 0)
+                })
+                
+            turmas.append({
+                "turma": turma.nome,
+                "dados": dados,
+                "grafico_id": f"grafico-{turma.id}"
+            })
+        except:
+            continue
+    
+    return JsonResponse(turmas, safe=False)
 
 @login_required(login_url='/login')
 def turmas(request):
