@@ -1,6 +1,9 @@
 from django.db import models
 from django.conf import settings
 from django.forms import ValidationError
+from django.utils.safestring import mark_safe
+
+from core.constants import SUGESTOES
 
 TIPOS_ALUNOS = [
     ('K', 'Predador'),
@@ -82,7 +85,32 @@ class Turma(models.Model):
         except Exception as e:
             print(e)
             return False
+        
+    def obter_sugestao(self):
+        alunos_turma = AlunosTurma.objects.filter(turma=self)
+        realizadores = alunos_turma.filter(aluno__tipo='A')
+        predadores = alunos_turma.filter(aluno__tipo='K')
+        socializadores = alunos_turma.filter(aluno__tipo='S')
+        exploradores = alunos_turma.filter(aluno__tipo='E')
 
+        maior, tipo = None, None
+        
+        if realizadores:
+            maior = realizadores.count()
+            tipo = 'A'
+        if predadores and (predadores.count() > maior):
+            maior = predadores.count()
+            tipo = 'K'
+        if socializadores and (socializadores.count() > maior):
+            maior = socializadores.count()
+            tipo = 'S'
+        if exploradores and (exploradores.count() > maior):
+            maior = exploradores.count()
+            tipo = 'E'
+            
+        if tipo:
+            return {'tipo': tipo, 'descricao': mark_safe(SUGESTOES[tipo])}
+        return ''
 class AlunosTurma(models.Model):
     turma = models.ForeignKey(Turma, on_delete=models.CASCADE)
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)

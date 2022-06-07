@@ -240,3 +240,71 @@ QUESTOES = [
         },
     },
 ]
+
+SUGESTOES = {
+    'K': {
+        '''
+        - São mais individualistas.
+        - Não se importam em passar por cima dos outros ou matar personagens que obstruem seu caminho.
+        - Preferem não socializar para focar em manter seu ranking alto e ganhar maior número de pontos.
+        - Querem estar à frente de todos e serem reconhecidos por isso.
+        É interessante utilizar:
+            - Regras: Para determinar o vencedor da dinâmica.
+            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Obrigatório)
+            - Objetivos: Metas menores que ajudam a entender o proposito do jogo.
+            - Recompensa: Prêmios por alcançar os objetivos.
+            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo.
+            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item.
+            - Ranking: Classificação de acordo com a pontuação. (Obrigatório)
+
+            Jogos competivivos como: Kahoot, Moeda Ficticia, AhaSlides.
+        '''
+    },
+    'A': {
+        '''
+        - Estão mais interessados no conteúdo do jogo, como a coleta de objetos, badges ou outros utensílios raros.
+        - Não se importam em socializar e até gostam de ensinar os outros o que sabem do jogo.
+        - Não estão focados no fim do jogo e sim em compreender toda sua história e possibilidades.
+        É interessante utilizar:
+            - Regras: Para determinar o vencedor da dinâmica.
+            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Opcional).
+            - Objetivos: Metas menores que ajudam a entender o proposito do jogo.
+            - Recompensa: Prêmios por alcançar os objetivos.
+            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo. (Obrigatório)
+            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. (Obrigatório)
+            - Ranking: Classificação de acordo com a pontuação. (Opcional)
+        '''
+    },
+    'S': {
+        '''
+        - Gostam de socializar, ter rankings compartilhados para ver em que nível seus amigos estão.
+        - Normalmente não são competitivos.
+        - Não gostam de destruir os outros, preferem ser altruístas.
+        - A maior parte dos jogadores se enquadra nessa opção.
+        É interessante utilizar:
+            - Regras: Para determinar o vencedor da dinâmica. (Opcional)
+            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Opcional)
+            - Objetivos: Metas menores que ajudam a entender o proposito do jogo. (Opcional)
+            - Recompensa: Prêmios por alcançar os objetivos. (Opcional)
+            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo. (Opcional)
+            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. (Opcional)
+            - Ranking: Classificação de acordo com a pontuação. (Opcional)
+
+        '''
+    },
+    'E': {
+        '''
+        - Gostam de personalizar e criar coisas dentro do jogo.
+        - Socializam para trocar itens, informações e pertences.
+        - Não estão focados em ganhar o jogo, querem entender as possibilidades e o que eles podem coletar do game.
+        É interessante utilizar:
+            - Regras: Para determinar o vencedor da dinâmica.
+            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Obrigatório)
+            - Objetivos: Metas menores que ajudam a entender o proposito do jogo.
+            - Recompensa: Prêmios por alcançar os objetivos. (Obrigatório)
+            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo.
+            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. (Obrigatório)
+            - Ranking: Classificação de acordo com a pontuação. (Opcional)
+        '''
+    }
+}

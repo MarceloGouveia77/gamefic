@@ -249,6 +249,11 @@ def detalhe_turma(request, pk):
     }
     return render(request, 'core/turmas/detalhe.html', data)
 
+def obter_sugestao_turma(request, id):
+    turma = Turma.objects.get(id=id)
+    return JsonResponse({'descricao': turma.obter_sugestao()['descricao'],
+                        'tipo': rankings[turma.obter_sugestao()['tipo']]})
+
 @csrf_exempt
 def gerar_link_tuma(request, pk):
     turma = Turma.objects.get(id=pk)

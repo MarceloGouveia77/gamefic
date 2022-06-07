@@ -21,5 +21,6 @@ urlpatterns = [
     path('turma/excluir/<int:id>/', views.excluir_turma, name='excluir_turma'),
     path('logout/', views.logout_site, name='logout'),
     path('login/', views.login_sistema, name='login'),
+    path('obter_sugestao_turma/<int:id>/', views.obter_sugestao_turma, name='obter_sugestao_turma'),
     path('questionario/', views.questionario, name='questionario')
 ]

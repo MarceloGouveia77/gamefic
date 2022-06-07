@@ -18,7 +18,8 @@ Sugestão de Gamificação
                     <div 
                         data-bs-toggle="modal" 
                         data-bs-target="#modal-sugestao-gameficacao" 
-                        class="col-md-12 m-0 p-0" 
+                        turma-id="{{ turma.id }}"
+                        class="col-md-12 m-0 p-0 card-modal-sugestao" 
                         id="grafico-{{ turma.id }}" 
                         style="vertical-align: middle; cursor: pointer;"
                     >
@@ -38,7 +39,8 @@ Sugestão de Gamificação
 				<h5 class="modal-title">Sugestão de Gameficação</h5>
 			</div>
 			<div class="modal-body">
-				<p>Aqui ficara a sugestão de Gameficação</p>
+                <h5 id="conteudo-tipo"></h5>
+				<div id="conteudo-sugestao"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -53,6 +55,24 @@ Sugestão de Gamificação
 <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.35.0/dist/apexcharts.min.js"></script>
 
 <script>
+    const cards = document.querySelectorAll(".card-modal-sugestao")
+    cards.forEach(card => {
+        card.addEventListener("click", function() {
+            document.getElementById('conteudo-sugestao').innerHTML = ''
+            document.getElementById('conteudo-tipo').innerHTML = ''
+            var turmaId = card.getAttribute("turma-id");
+    
+            fetch('/obter_sugestao_turma/'+turmaId, {
+                method: "GET",
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                document.getElementById('conteudo-tipo').innerHTML = data.tipo
+                document.getElementById('conteudo-sugestao').innerHTML = data.descricao.replaceAll("{'", "'").replaceAll("'}", "'").replaceAll("\\n", "<br>");
+            });
+        });
+    })
+
     fetch('/sugestao/graficos/', {
         method: "GET",
     }).then(function (response) {
