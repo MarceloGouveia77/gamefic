@@ -237,11 +237,6 @@
     document.querySelector(".btn-submit-alterar-nota").addEventListener("click", function(e){
         const nota = document.querySelector("#alt-nota-aluno-nota").value;
         const atividade_id = document.querySelector("#alt-nota-aluno-atividade").value;
-        
-        if (parseFloat(nota) < 0){
-            document.querySelector(".erro-nota").classList.remove("d-none");
-            return;
-        }
 
         const url = '/alunos/alterar_nota/';
         
