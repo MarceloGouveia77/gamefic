@@ -184,8 +184,9 @@ def detalhe_turma(request, pk):
 @csrf_exempt
 def gerar_link_tuma(request, pk):
     turma = Turma.objects.get(id=pk)
-    turma.hash_convite = uuid.uuid4()
-    turma.save()
+    if not turma.hash_convite: 
+        turma.hash_convite = uuid.uuid4()
+        turma.save()
     return JsonResponse({'link': f'http://localhost:8000/turmas/entrar/{turma.hash_convite}/'}, status=200)
 
 @login_required(login_url='/login')
