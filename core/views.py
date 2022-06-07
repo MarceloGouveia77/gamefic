@@ -175,7 +175,7 @@ def detalhe_turma(request, pk):
     data = {
         'pagina': 'Minhas Turmas',
         'turma': turma,
-        'alunos_turma': AlunosTurma.objects.filter(turma=turma),
+        'alunos_turma': AlunosTurma.objects.filter(turma=turma).order_by('aluno__nome'),
         'professores': ProfessoresTurma.objects.filter(turma=turma),
         'atividades': Atividade.objects.filter(turma=turma)
     }
