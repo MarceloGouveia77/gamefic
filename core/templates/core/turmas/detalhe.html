@@ -6,7 +6,9 @@
     
 
 {% block botoes %}
-<button turma-id="{{ turma.id }}" class="btn btn-sm btn-success {% if not user.is_superuser %} disabled {% endif %}" id="btn-gerar-link" type="button">Gerar Link</button>
+{% if user.is_superuser %}
+<button turma-id="{{ turma.id }}" class="btn btn-sm btn-success" id="btn-gerar-link" type="button">Gerar Link</button>
+{% endif %}
 {% endblock botoes %}
     
 
@@ -32,10 +34,12 @@
                     </div>
                 </div>
             </div>
+            {% if user.is_superuser %}
             <div class="card-footer text-end">
-                <a href="" class="btn btn-sm btn-primary {% if not user.is_superuser %} disabled {% endif %}">Editar</a>
-                <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
+                <a href="" class="btn btn-sm btn-primary">Editar</a>
+                <a href="" class="btn btn-sm btn-danger">Excluir</a>
             </div>
+            {% endif %}
         </div>
     </div>
     <div class="col-12">
@@ -58,19 +62,23 @@
                                 <table class="table">
                                     <div class="thead">
                                         <th>Nome</th>
-                                        <th>Pontuação Total</th>
                                         <th>Email</th>
-                                        <th>Opções</th>
+                                        <th>Pontuação Total</th>
+                                        {% if user.is_superuser %}
+                                            <th>Opções</th>
+                                        {% endif %}
                                     </div>
                                     <div class="tbody">
                                         {% for aluno_turma in alunos_turma %}
                                         <tr>
                                             <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
-                                            <td>{{ aluno_turma.aluno|calcular_pontuacao_total:aluno_turma.turma }}</td>
                                             <td>{{ aluno_turma.aluno.usuario.email }}</td>
+                                            <td>{{ aluno_turma.aluno|calcular_pontuacao_total:aluno_turma.turma }}</td>
+                                            {% if user.is_superuser %}
                                             <td>
-                                                <a href="" class="btn btn-sm btn-danger {% if not user.is_superuser %} disabled {% endif %}">Excluir</a>
+                                                <a href="" class="btn btn-sm btn-danger">Excluir</a>
                                             </td>
+                                            {% endif %}
                                         </tr>
                                         {% endfor %}
                                     </div>

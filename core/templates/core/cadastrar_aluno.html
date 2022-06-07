@@ -47,11 +47,19 @@
                             <i class="fa fa-lock"></i>
                             <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirmar Senha" required>
                         </div>
-                        <div class="form-check py-2 ms-2">
-                            <input class="form-check-input" type="checkbox" name="professor" value="ok" id="professor">
-                            <label class="form-check-label" for="professor">
-                              Você é professor?
-                            </label>
+                        <div class="form-check py-2 ms-0 ps-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoCadastro" id="tipoCadastro1" value="aluno" checked>
+                                <label class="form-check-label" for="tipoCadastro1">
+                                  Aluno
+                                </label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="tipoCadastro" id="tipoCadastro2" value="professor">
+                                <label class="form-check-label" for="tipoCadastro2">
+                                  Professor
+                                </label>
+                              </div>
                         </div>
                         {% if erro %}
                             <div class="alert-danger">

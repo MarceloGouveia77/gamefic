@@ -51,7 +51,7 @@ def cadastrar_aluno(request):
     data = {}
     if request.method == "POST":
         professor = False
-        if request.POST.get('professor'):
+        if request.POST.get('tipoCadastro') == 'professor':
             professor = True
         User = get_user_model()
         
