@@ -7,7 +7,7 @@
 
 {% block botoes %}
 {% if user.is_superuser %}
-<button turma-id="{{ turma.id }}" class="btn btn-sm btn-success" id="btn-gerar-link" type="button">Gerar Link</button>
+<button turma-id="{{ turma.id }}" class="btn btn-sm btn-success btn-gerar-link" type="button">Gerar Link</button>
 {% endif %}
 {% endblock botoes %}
     
@@ -88,7 +88,7 @@
                         {% else %}
                         <div class="row">
                             <div class="col-12 text-center pt-3">
-                                <p>Não há alunos nesta turma. Gere o link para convidar. <button turma-id="{{ turma.id }}" class="btn btn-sm btn-success {% if not user.is_superuser %} disabled {% endif %}" id="btn-gerar-link" type="button">Gerar Link</button></p>
+                                <p>Não há alunos nesta turma. <a turma-id="{{ turma.id }}" href="#" class="text-primary btn-gerar-link">Gere o Link</a> para convidar.
                             </div>
                         </div>
                         {% endif %}
@@ -103,46 +103,52 @@
                                 </button>
                                 {% endif %}
                             </div>
-                            <div class="col-12 overflow-auto d-block">
-                                <table class="table table-bordered table-striped text-nowrap" style="width: 100%; overflow-x: scroll !important" id="atividades-table"> 
-                                    <div class="thead">
-                                        <th class="text-start font-weight-bold align-middle py-2">Aluno</th>
-                                        {% for atividade in atividades %}
-                                            <th class="py-2 text-center">{{ atividade.descricao }}</th>
-                                        {% endfor %}
-                                        <th>Total</th>
-                                    </div>
-                                    <div class="tbody">
-                                        {% for aluno_turma in alunos_turma %}
-                                        <tr>
-                                            <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
+                            
+                            {% if atividades %}
+                                <div class="col-12 overflow-auto d-block">
+                                    <table class="table table-bordered table-striped text-nowrap" style="width: 100%; overflow-x: scroll !important" id="atividades-table"> 
+                                        <div class="thead">
+                                            <th class="text-start font-weight-bold align-middle py-2">Aluno</th>
                                             {% for atividade in atividades %}
-                                                
-                                                {% with at=atividade|obter_aluno_atividade:aluno_turma.aluno %}
-                                                    <td style="cursor: pointer"
-                                                    {% if user.is_superuser %}
-                                                        class="text-center btn-alterar-nota btn-alterar-nota-{{ at.id }}"" 
-                                                        atividade-id="{{ at.id }}"
-                                                        aluno-id="{{ aluno_turma.aluno.id }}"
-                                                        aluno-nota="{{ at.nota }}"
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#modal-alterar-nota"
-                                                    {% else %}
-                                                        class="text-center" 
-                                                    {% endif %}
-                                                    >
-                                                    <span id="atividade-{{ at.id }}">{{ at.nota }}</span>
-                                                    </td>
-                                                    
-                                                {% endwith %}
-                                                    
+                                                <th class="py-2 text-center">{{ atividade.descricao }}</th>
                                             {% endfor %}
-                                            <td><span id="pontuacao-{{ aluno_turma.aluno.id }}">{{ aluno_turma.aluno|calcular_pontuacao_total:aluno_turma.turma }}</span></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </div>
-                                </table>
-                            </div>
+                                            <th>Total</th>
+                                        </div>
+                                        <div class="tbody">
+                                            {% for aluno_turma in alunos_turma %}
+                                            <tr>
+                                                <td>{{ aluno_turma.aluno.obter_nome_completo }}</td>
+                                                {% for atividade in atividades %}
+                                                    
+                                                    {% with at=atividade|obter_aluno_atividade:aluno_turma.aluno %}
+                                                        <td style="cursor: pointer"
+                                                        {% if user.is_superuser %}
+                                                            class="text-center btn-alterar-nota btn-alterar-nota-{{ at.id }}"" 
+                                                            atividade-id="{{ at.id }}"
+                                                            aluno-id="{{ aluno_turma.aluno.id }}"
+                                                            aluno-nota="{{ at.nota }}"
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#modal-alterar-nota"
+                                                        {% else %}
+                                                            class="text-center" 
+                                                        {% endif %}
+                                                        >
+                                                        <span id="atividade-{{ at.id }}">{{ at.nota }}</span>
+                                                        </td>
+                                                        
+                                                    {% endwith %}
+                                                        
+                                                {% endfor %}
+                                                <td><span id="pontuacao-{{ aluno_turma.aluno.id }}">{{ aluno_turma.aluno|calcular_pontuacao_total:aluno_turma.turma }}</span></td>
+                                            </tr>
+                                            {% endfor %}
+                                        </div>
+                                    </table>
+                                </div>
+                            {% else %}
+                            <p class="text-center">Não há atividades cadastradas.</p>
+                            {% endif %}
+                                
                         </div>
                     </div>
                 </div>
@@ -294,34 +300,37 @@
         });
     })
 
-    const el = document.getElementById("btn-gerar-link").addEventListener("click", function(e) { 
-        const turmaId = this.getAttribute("turma-id");
-        const endpoint = `/turmas/gerar_link/${turmaId}/`;
-
-        const myRequest = new Request(endpoint, {method: 'GET'});
-
-        fetch(myRequest)
-        .then(response => {
-            if (response.status === 200) {
-                return response.json();
-            } else {
-                throw new Error('Ops! Houve um erro em nosso servidor.');
-            }
-        })
-        .then(response => {
-            Swal.fire({
-            icon: 'success',
-            title: 'Link gerado.',
-            text: response.link,
+    const btnGerar = document.querySelectorAll('.btn-gerar-link')
+    btnGerar.forEach(btn => { 
+        btn.addEventListener("click", function(e) { 
+            const turmaId = this.getAttribute("turma-id");
+            const endpoint = `/turmas/gerar_link/${turmaId}/`;
+    
+            const myRequest = new Request(endpoint, {method: 'GET'});
+    
+            fetch(myRequest)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error('Ops! Houve um erro em nosso servidor.');
+                }
             })
-        }).catch(error => {
-            Swal.fire({
-            icon: 'error',
-            title: error,
-            text: 'https://localhost:8000/turma/{{ turma.id }}',
-            })
+            .then(response => {
+                Swal.fire({
+                icon: 'success',
+                title: 'Link gerado.',
+                text: response.link,
+                })
+            }).catch(error => {
+                Swal.fire({
+                icon: 'error',
+                title: error,
+                text: 'https://localhost:8000/turma/{{ turma.id }}',
+                })
+            });
         });
-    });
+    })
 </script>
 {% endblock scripts %}
     
