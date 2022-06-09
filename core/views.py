@@ -185,6 +185,7 @@ def graficos_sugestao(request):
                 })
                 
             turmas.append({
+                "turma_id": turma.id,
                 "turma": turma.nome,
                 "dados": dados,
                 "grafico_id": f"grafico-{turma.id}"
@@ -252,6 +253,14 @@ def excluir_turma(request, id):
     except:
         return JsonResponse({'sucesso': False, 'msg': 'Erro ao excluir turma'})
 
+def excluir_aluno_turma(request, id):
+    try:
+        aluno = AlunosTurma.objects.get(id=id)
+        aluno.delete()
+        return JsonResponse({'sucesso': True, 'msg': 'Aluno excluído com sucesso'})
+    except:
+        return JsonResponse({'sucesso': False, 'msg': 'Erro ao excluir aluno'})
+
 @login_required(login_url='/login')
 def detalhe_turma(request, pk):
     try:
@@ -264,10 +273,13 @@ def detalhe_turma(request, pk):
         pass
     turma = Turma.objects.get(id=pk)
     
+    alunos = AlunosTurma.objects.filter(turma=turma).order_by('aluno__nome')
+
     data = {
         'pagina': 'Minhas Turmas',
         'turma': turma,
-        'alunos_turma': AlunosTurma.objects.filter(turma=turma).order_by('aluno__nome'),
+        'alunos_turma': alunos,
+        'alunos_ranking': alunos.order_by('-pontuacao'),
         'professores': ProfessoresTurma.objects.filter(turma=turma),
         'atividades': Atividade.objects.filter(turma=turma)
     }

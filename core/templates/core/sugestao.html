@@ -25,7 +25,7 @@ Sugestão de Gamificação
                     >
                     
                 </div>
-                <span class="notice" style="text-align:center;font-size:12px;">Clique no gráfico para sugestão de gameficação</span>
+                <span class="notice" id="notice-{{ turma.id }}" style="text-align:center;font-size:12px;">Clique no gráfico para sugestão de gameficação</span>
                 </div>
             </div>
         </div>
@@ -89,9 +89,15 @@ Sugestão de Gamificação
                 labels: grafico.dados.map(dado => dado.categoria),
         
                 };
-        
-                var chart = new ApexCharts(document.querySelector(`#${grafico.grafico_id}`), options);
-                chart.render();
+                
+                if (grafico.dados.length){
+                    var chart = new ApexCharts(document.querySelector(`#${grafico.grafico_id}`), options);
+                    chart.render();
+                } else {
+                    let notice = document.getElementById("notice-"+grafico.turma_id);
+                    notice.innerText = "Não há dados para sugestão de gameficação";
+                    notice.classList.add("my-4")
+                }
         })
     });
 </script>

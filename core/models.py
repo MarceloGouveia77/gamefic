@@ -5,6 +5,13 @@ from django.utils.safestring import mark_safe
 
 from core.constants import SUGESTOES
 
+rankings = {
+    'K': 'Predador',
+    'A': 'Realizador',
+    'S': 'Socializador',
+    'E': 'Explorador',
+}
+
 TIPOS_ALUNOS = [
     ('K', 'Predador'),
     ('A', 'Realizador'),
@@ -22,6 +29,9 @@ class Aluno(models.Model):
 
     def __str__(self):
         return f'{self.nome} {self.sobrenome}'
+    
+    def obter_perfil(self):
+        return rankings[self.tipo]
     
     def obter_nome_completo(self):
         return self.nome + ' ' + self.sobrenome
@@ -46,6 +56,9 @@ class Aluno(models.Model):
             total = 0
             for atividade in atividades:
                 total += atividade.nota
+            aluno_turma = AlunosTurma.objects.get(aluno=self, turma=turma)
+            aluno_turma.pontuacao = float(total)
+            aluno_turma.save()
             return float(total)
         except:
             return 0
