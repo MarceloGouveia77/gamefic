@@ -106,7 +106,7 @@ class Turma(models.Model):
         socializadores = alunos_turma.filter(aluno__tipo='S')
         exploradores = alunos_turma.filter(aluno__tipo='E')
 
-        maior, tipo = None, None
+        maior, tipo = 0, None
         
         if realizadores:
             maior = realizadores.count()

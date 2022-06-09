@@ -296,7 +296,7 @@ def gerar_link_tuma(request, pk):
     if not turma.hash_convite: 
         turma.hash_convite = uuid.uuid4()
         turma.save()
-    return JsonResponse({'link': f'http://localhost:8000/turmas/entrar/{turma.hash_convite}/'}, status=200)
+    return JsonResponse({'link': f'https://gameizi.ddns.net/turmas/entrar/{turma.hash_convite}/'}, status=200)
 
 @login_required(login_url='/login')
 def entrar_turma(request, hash):
