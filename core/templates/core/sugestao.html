@@ -68,7 +68,7 @@ Sugestão de Gamificação
                 return response.json();
             }).then(function (data) {
                 document.getElementById('conteudo-tipo').innerHTML = data.tipo
-                document.getElementById('conteudo-sugestao').innerHTML = data.descricao.replaceAll("{'", "'").replaceAll("'}", "'").replaceAll("\\n", "<br>");
+                document.getElementById('conteudo-sugestao').innerHTML = data.descricao.replaceAll("{'", "").replaceAll("'}", "").replaceAll("\\n", "<br>");
             });
         });
     })

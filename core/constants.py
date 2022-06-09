@@ -241,70 +241,71 @@ QUESTOES = [
     },
 ]
 
+
 SUGESTOES = {
     'K': {
         '''
-        - São mais individualistas.
-        - Não se importam em passar por cima dos outros ou matar personagens que obstruem seu caminho.
-        - Preferem não socializar para focar em manter seu ranking alto e ganhar maior número de pontos.
-        - Querem estar à frente de todos e serem reconhecidos por isso.
-        É interessante utilizar:
-            - Regras: Para determinar o vencedor da dinâmica.
-            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Obrigatório)
-            - Objetivos: Metas menores que ajudam a entender o proposito do jogo.
-            - Recompensa: Prêmios por alcançar os objetivos.
-            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo.
-            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item.
-            - Ranking: Classificação de acordo com a pontuação. (Obrigatório)
+        São mais individualistas.
+        Não se importam em passar por cima dos outros ou matar personagens que obstruem seu caminho.
+        Preferem não socializar para focar em manter seu ranking alto e ganhar maior número de pontos.
+        Querem estar à frente de todos e serem reconhecidos por isso.
 
-            Jogos competivivos como: Kahoot, Moeda Ficticia, AhaSlides.
+        É interessante utilizar:
+            <li>Regras: Para determinar o vencedor da dinâmica.</li><li>Pontuação: É o prêmio pela conquista das metas e objetivos. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li><li>Objetivos: Metas menores que ajudam a entender o proposito do jogo.</li><li>Recompensa: Prêmios por alcançar os objetivos.</li><li>Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo.</li>     <li>Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item.</li><li>Ranking: Classificação de acordo com a pontuação. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li>
+            <mark>Gostam de competitividade, sempre está em primeiro no ranking.</mark>
+
+            Sugestões de jogos: 
+                - Jogos competivivos no geral.
+                - <a href="https://kahoot.it/" target="_blank" style="color:#5995fd;">Kahoot (Quiz)</a>: Utilizar a ferramenta como gamificação, e utilizar a Gameizi como ranking, caso tenha vários jogos, fazer um ranking geral e separado de cada game feito no Kahoot.
+                - <a href="https://ahaslides.com/pt/" target="_blank" style="color:#5995fd;">AhaSlides (Quiz)</a>: Unir apresentação de slides com quiz. Depois só cadastrar no Gameizi a pontuação que cada aluno teve, montando assim um ranking.
         '''
     },
     'A': {
         '''
-        - Estão mais interessados no conteúdo do jogo, como a coleta de objetos, badges ou outros utensílios raros.
-        - Não se importam em socializar e até gostam de ensinar os outros o que sabem do jogo.
-        - Não estão focados no fim do jogo e sim em compreender toda sua história e possibilidades.
+        Estão mais interessados no conteúdo do jogo, como a coleta de objetos, badges ou outros utensílios raros.
+        Não se importam em socializar e até gostam de ensinar os outros o que sabem do jogo.
+        Não estão focados no fim do jogo e sim em compreender toda sua história e possibilidades.
+
         É interessante utilizar:
-            - Regras: Para determinar o vencedor da dinâmica.
-            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Opcional).
-            - Objetivos: Metas menores que ajudam a entender o proposito do jogo.
-            - Recompensa: Prêmios por alcançar os objetivos.
-            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo. (Obrigatório)
-            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. (Obrigatório)
-            - Ranking: Classificação de acordo com a pontuação. (Opcional)
+            <li>Regras: Para determinar o vencedor da dinâmica. </li><li>Pontuação: É o prêmio pela conquista das metas e objetivos. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Objetivos: Metas menores que ajudam a entender o proposito do jogo. </li><li>Recompensa: Prêmios por alcançar os objetivos. </li><li>Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li><li>Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li><li>Ranking: Classificação de acordo com a pontuação. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li>
+            <mark>São atraídos por medalhas, troféus.</mark>
+            
+            Sugestões de jogos: 
+                -  <a href="https://kahoot.it/" target="_blank" style="color:#5995fd;">Kahoot</a>: Utilizar a ferramenta como meio de aprendizagem do aluno, e utilizar algum sistema por fora de medalha, podendo ser potuação extra (bônus), algum item externo (mundo real) para colecionar.
+                - <span style="color:#5995fd;">Moeda fictícia</span>: Utilizar qualquer meio e/o tipo de jogo para o aprendizado, utilizando os elementos obrigatórios, e criar uma moeda fictícia para pontuar os alunos (pode utilizar a própria pontuação da plataforma) que acertam mais, e no final ser trocado por algum prêmio que o aluno se interesse.
+                -  <a href="https://www.classcraft.com/pt/" target="_blank" style="color:#5995fd;">Classcraft</a>: Pode utilizar como medalha a criação de personagem que a plataforma fornece. Podendo criar a gamificação dentro ou fora da plataforma.        
         '''
     },
     'S': {
         '''
-        - Gostam de socializar, ter rankings compartilhados para ver em que nível seus amigos estão.
-        - Normalmente não são competitivos.
-        - Não gostam de destruir os outros, preferem ser altruístas.
-        - A maior parte dos jogadores se enquadra nessa opção.
+        Gostam de socializar, ter rankings compartilhados para ver em que nível seus amigos estão.
+        Normalmente não são competitivos.
+        Não gostam de destruir os outros, preferem ser altruístas.
+        A maior parte dos jogadores se enquadra nessa opção.
+        
         É interessante utilizar:
-            - Regras: Para determinar o vencedor da dinâmica. (Opcional)
-            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Opcional)
-            - Objetivos: Metas menores que ajudam a entender o proposito do jogo. (Opcional)
-            - Recompensa: Prêmios por alcançar os objetivos. (Opcional)
-            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo. (Opcional)
-            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. (Opcional)
-            - Ranking: Classificação de acordo com a pontuação. (Opcional)
+            <li>Regras: Para determinar o vencedor da dinâmica. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Pontuação: É o prêmio pela conquista das metas e objetivos. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Objetivos: Metas menores que ajudam a entender o proposito do jogo. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Recompensa: Prêmios por alcançar os objetivos. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li><li>Ranking: Classificação de acordo com a pontuação. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li>
+            <mark>O jogo em si não é importante para esse tipo de jogador, o fato de ter interatividade com outras pessoas já é o suficiente.</mark>
 
+            Sugestões de jogos: 
+                - <span style="color:#5995fd;">Moeda fictícia</span>: A ideia da moeda fictícia é realizar algum tipo de gamificação e/ou atividade e fornecer uma moeda como troca, para no final ser trocado por alguma coisa (prêmio na vida real (bombom, bala, boton, caneta personalizada, etc.), bonificação na matéria, etc.), use a imaginação com os prêmios, mas lembre-se de colocar premiações que interesse os alunos, para eles ficarem interessados na gamificação e assim realizar o que foi proposto para conseguir as moedas. Dica: As moedas podem ser pontos cadastrados no painel "Turmas" do Gameizi.
+                - <a href="https://kahoot.it/" target="_blank" style="color:#5995fd;">Kahoot</a>: Utilizar a ferramenta como gamificação, e utilizar a Gameizi como ranking caso queira, pode ser fazer um ranking geral e separado de cada game feito no Kahoot.
+                - <a href="https://ahaslides.com/pt/" target="_blank" style="color:#5995fd;">AhaSlides</a>: Utilize a ferramenta para criar as aulas e ministrar o conteúdo, e no meio delas fazer a gamificação, algum quiz de aprendizado ou competitivo, criar enquete para diversificar. Pode-se utilizar enquete para separar a turma em grupo, deixar eles escolherem o grupo que quer participar, e nos próximos slides utilizar coisas que forcem uma comunicação ou discussão entre si. Dica: utilizar o Gameizi caso queira fazer um ranking ou controle das aulas.
         '''
     },
     'E': {
         '''
-        - Gostam de personalizar e criar coisas dentro do jogo.
-        - Socializam para trocar itens, informações e pertences.
-        - Não estão focados em ganhar o jogo, querem entender as possibilidades e o que eles podem coletar do game.
+        Gostam de personalizar e criar coisas dentro do jogo.
+        Socializam para trocar itens, informações e pertences.
+        Não estão focados em ganhar o jogo, querem entender as possibilidades e o que eles podem coletar do game.
         É interessante utilizar:
-            - Regras: Para determinar o vencedor da dinâmica.
-            - Pontuação: É o prêmio pela conquista das metas e objetivos. (Obrigatório)
-            - Objetivos: Metas menores que ajudam a entender o proposito do jogo.
-            - Recompensa: Prêmios por alcançar os objetivos. (Obrigatório)
-            - Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo.
-            - Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. (Obrigatório)
-            - Ranking: Classificação de acordo com a pontuação. (Opcional)
+           <li>Regras: Para determinar o vencedor da dinâmica.</li><li>Pontuação: É o prêmio pela conquista das metas e objetivos. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li><li>Objetivos: Metas menores que ajudam a entender o proposito do jogo.</li><li>Recompensa: Prêmios por alcançar os objetivos. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li><li>Feedback: Uma forma de guiar os jogadores, ajudando a saber o quão acertivos estão indo.</li><li>Medalhas: Incentivam os jogadores a da o seu melhor para consquistar o item. <strong style="color:#ff0000;font-size:9px;">(Obrigatório)</strong></li><li>Ranking: Classificação de acordo com a pontuação. <strong style="color:#ffb300;font-size:9px;">(Opcional)</strong></li>
+            <mark>Gostam da narrativa, são curiosos, desvendar mistérios e cumprir desafios.</mark>
+
+            Sugestões de jogos: 
+                - <span style="color:#5995fd;">Moeda fictícia</span>: A ideia da moeda fictícia é realizar algum tipo de gamificação e/ou atividade e fornecer uma moeda como troca, para no final ser trocado por alguma coisa (prêmio na vida real (bombom, bala, boton, caneta personalizada, etc.), bonificação na matéria, etc.), use a imaginação com os prêmios, mas lembre-se de colocar premiações que interesse os alunos, para eles ficarem interessados na gamificação e assim realizar o que foi proposto para conseguir as moedas. Dica: As moedas podem ser pontos cadastrados no painel "Turmas" do Gameizi.
+                - <a href="https://kahoot.it/" target="_blank" style="color:#5995fd;">Kahoot</a>: Utilizar a ferramenta como gamificação, e utilizar a Gameizi como ranking caso queira, pode ser fazer um ranking geral e separado de cada game feito no Kahoot. Lembre-se de não deixar as coisas competitivas aqui. 
+                -  <a href="https://www.classcraft.com/pt/" target="_blank" style="color:#5995fd;">Classcraft</a>: Utilizar a ferramenta para criação de personagens e colecionar itens. Pois esse tipo de jogador gosta de trôfeus e insígnias.
         '''
     }
 }
