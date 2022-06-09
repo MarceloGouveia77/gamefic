@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, reverse
 from core.constants import QUESTOES
 from core.forms import AlunoForm, TurmaForm
 from django.contrib.auth import authenticate, login, logout
@@ -52,7 +52,10 @@ def login_sistema(request):
         else:
             return render(request, 'core/login.html', {'erro': 'Email ou senha inválidos.'})
     
-    return render(request, 'core/login.html', {})
+    next = False
+    if request.GET.get("next"):
+        next = request.GET.get("next")
+    return render(request, 'core/login.html', {'next': next})
 
 def cadastrar_aluno(request):
     data = {}
@@ -100,6 +103,9 @@ def cadastrar_aluno(request):
             data['cadastrado'] = True
         except:
             data['erro'] = "Ocorreu um erro ao cadastrar o aluno"
+            
+        if data['cadastrado'] and request.GET.get('next'):
+            return redirect(request.GET.get('next'))
     return render(request, 'core/cadastrar_aluno.html', data)
 
 def logout_site(request):
@@ -111,6 +117,8 @@ def index(request):
     try:
         aluno = Aluno.objects.get(usuario=request.user)
         if not aluno.confirmado:
+            if request.GET.get('next'):
+                return redirect(reverse('core:questionario') + '?next=' + request.GET.get('next'))
             return redirect('core:questionario')
     except:
         pass
@@ -188,6 +196,14 @@ def graficos_sugestao(request):
 
 @login_required(login_url='/login')
 def turmas(request):
+    try:
+        aluno = Aluno.objects.get(usuario=request.user)
+        if not aluno.confirmado:
+            if request.GET.get('next'):
+                return redirect(reverse('core:questionario') + '?next=' + request.GET.get('next'))
+            return redirect('core:questionario')
+    except:
+        pass
     todas_turmas = Turma.objects.all().order_by('nome')
     turmas = []
     
@@ -238,6 +254,14 @@ def excluir_turma(request, id):
 
 @login_required(login_url='/login')
 def detalhe_turma(request, pk):
+    try:
+        aluno = Aluno.objects.get(usuario=request.user)
+        if not aluno.confirmado:
+            if request.GET.get('next'):
+                return redirect(reverse('core:questionario') + '?next=' + request.GET.get('next'))
+            return redirect('core:questionario')
+    except:
+        pass
     turma = Turma.objects.get(id=pk)
     
     data = {
@@ -264,6 +288,12 @@ def gerar_link_tuma(request, pk):
 
 @login_required(login_url='/login')
 def entrar_turma(request, hash):
+    try:
+        aluno = Aluno.objects.get(usuario=request.user)
+        if not aluno.confirmado:
+            return redirect(reverse('core:questionario') + '?next=' + f'/turmas/entrar/{hash}')
+    except:
+        pass
     data = {
         'hash': hash,
     }
@@ -346,7 +376,11 @@ def questionario(request):
         aluno.tipo = rank
         aluno.confirmado = True
         aluno.save()
-        return HttpResponse(f"Resultado de seu perfil: {aluno.tipo}")
+        next = "/"
+        if request.GET.get('next'):
+            next = request.GET.get('next')
+            print(next)
+        return JsonResponse({'sucesso': True, 'msg': f"Resultado de seu perfil: {rankings[aluno.tipo]}", 'next': next})
     return render(request, 'core/questionario.html', data)
 
 @csrf_exempt

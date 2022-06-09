@@ -41,7 +41,7 @@
     
                     <div class="sigup-text">
                         <span>Não tenho uma conta? </span>
-                        <a href="{% url 'core:cadastrar_aluno' %}">Crie uma conta agora</a>
+                        <a href="{% url 'core:cadastrar_aluno' %}{% if next %}?next={{ next }} {% endif %}">Crie uma conta agora</a>
                     </div>
                 </form> 
             </div>

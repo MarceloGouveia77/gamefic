@@ -71,14 +71,15 @@
             var form = document.getElementById("questionario-form");
             var formData = new FormData(form);
             formData.append("respostas", listaRespostas);
-            var url = '/questionario/';
+            var url = window.location.href;
             var method = form.getAttribute("method");
             var xhr = new XMLHttpRequest();
             xhr.open(method, url);
             xhr.onload = function(res) {
                 if (this.status == 200) {
-                    alert(res.currentTarget.response);
-                    window.location.href = "/";
+                    response = JSON.parse(res.currentTarget.response);
+                    alert(response.msg);
+                    window.location.href = response.next;
                 } else {
                     alert("Erro ao enviar o questionário!");
                 }
